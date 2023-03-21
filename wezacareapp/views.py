@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics,permissions
+from rest_framework import authentication,generics,permissions
 from .models import *
 from .serializers import *
 
@@ -12,10 +12,10 @@ class QuestionListAPIView(generics.ListAPIView):
 
 class QuestionCreateAPIView(generics.CreateAPIView):
     serializer_class=QuestionSerializer
-    # permission_classes=[permissions.IsAuthenticated,]
+    permission_classes=[permissions.IsAuthenticated,]
 
     def create_question(self,serializer):
-        serializer.save(author=self.request.user)
+        serializer.save(author=1)
 
 
 class QuestionRetrieveAPIView(generics.RetrieveAPIView):
@@ -28,8 +28,8 @@ class QuestionDeleteAPIView(generics.DestroyAPIView):
     serializer_class=QuestionSerializer
     #TODO:permission classes
 
-    def get_queryset(self):
-        return super().get_queryset().filter(author=self.request.user)
+    #def get_queryset(self):
+        #return super().get_queryset().filter(author=self.request.user)
     
 
 class QuestionUpdateAPIView(generics.UpdateAPIView):
