@@ -12,10 +12,12 @@ class QuestionListAPIView(generics.ListAPIView):
 
 class QuestionCreateAPIView(generics.CreateAPIView):
     serializer_class=QuestionSerializer
-    permission_classes=[permissions.IsAuthenticated,]
+    permission_classes=(permissions.IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
 
-    def create_question(self,serializer):
-        serializer.save(author=1)
+    def create(self,serializer):
+        print(self.request.user)
+        serializer.save(author=self.request.user)
 
 
 class QuestionRetrieveAPIView(generics.RetrieveAPIView):
